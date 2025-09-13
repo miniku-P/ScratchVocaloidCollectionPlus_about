@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>スクボカとは？ - スクボカ</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    @font-face { font-family: "NicoKaku"; src: url("./NicoKaku-v2.woff2") format("woff2"); font-display: swap; }
+    @font-face { font-family: "Tsunagi"; src: url("./TsunagiGothic-Black.woff2") format("woff2"); font-display: swap; }
+
+    body{ margin:0; font-family:"Tsunagi","NicoKaku",sans-serif; padding-top:68px; background:#fff; }
+
+    .header{
+      position:fixed; top:0; left:0; right:0; height:68px;
+      display:flex; align-items:center; gap:1.5rem;
+      background:#7e4fc1; color:#fff; padding:0 1.25rem;
+      z-index:1000;
+    }
+    .logo img{ height:44px; display:block; }
+    .nav a{ color:#fff; text-decoration:none; font-weight:700; font-family:"NicoKaku",sans-serif; }
+    .nav a:hover { text-decoration:underline; }
+
+    main{ max-width:980px; margin:2rem auto; padding:1rem; }
+    section{ margin-bottom:2rem; }
+
+    @keyframes ghost { from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:translateY(0);} }
+    .ghost { opacity:0; }
+    .ghost.show { animation: ghost 0.9s ease-out forwards; }
+
+    .back { display:inline-block; margin-top:1rem; padding:0.4rem 0.8rem; background:#eee; border-radius:6px; text-decoration:none; color:#333; }
+    a {
+      color: #4c0082;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }  
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo"> <a href="ScVoca-top.html"><img src="スクボカ+ png2.png" alt="スクボカロゴ"></a></div>
+    <nav class="nav">
+      <a href="index.html">トップに戻る</a>
+    </nav>
+  </header>
+
+  <main>
+     <div class="ghost">
+    <img src="スクボカ+ png2.png" alt="スクボカロゴ">
+  </div>
+    <section class="ghost">
+      <h1>スクボカとは？</h1>
+      <p>
+        スクボカとは、ScratchでのボカロP(スクボカロP)を増やす目的のスタジオ
+        <a href="https://scratch.mit.edu/studios/50803615" target="_blank" rel="noopener noreferrer">「[公式]スクボカ」</a>、
+        それを移行したDiscordのサーバー「[公式]スクボカ」のことです。
+        それらのコミュニティーのwebpage版として管理者により作成されたのがこのwebpageです。
+      </p>
+    </section>
+
+    <section class="ghost">
+      <h2>管理者について</h2>
+      <p>
+        管理者は、このプロダクトを制御します。Scratch内では管理者以外を招待すること、あるいはその人々をBANする権利が与えられます。<br>
+        管理者の選考は <b><a href="https://scratch.mit.edu/users/_ugly-maximizer_/" target="_blank">@_ugly-maximizer_</a></b>(私) とその他管理者により定められます。<br>
+        また、管理者が違反行為などを行った場合、_ugly-maximizer_ がBANします。<br>
+        管理者はDiscord内ではほぼすべての権限を与えられます。
+      </p>
+    </section>
+
+    <section class="ghost">
+      <h2>管理者一覧</h2>
+      <p>
+        <a href="https://scratch.mit.edu/users/_ugly-maximizer_/" target="_blank">@_ugly-maximizer_</a>(私、みにくP)<br>
+        <a href="https://scratch.mit.edu/users/Q4119/" target="_blank">@Q4119様</a>(名義なし)<br>
+        <a href="https://scratch.mit.edu/users/hoshikage-sekai/" target="_blank">@hoshikage-sekai様</a>(孤宵)<br>
+        <a href="https://scratch.mit.edu/users/kuronya0119/" target="_blank">@kuronya0119</a>(くろにゃ)<br>
+        <a href="https://scratch.mit.edu/users/kaeruha/" target="_blank">@kaeruha</a>(蛙葉)<br>
+        (敬称略)
+      </p>
+    </section>
+
+    <a class="back" href="index.html">← トップに戻る</a>
+  </main>
+
+  <script>
+    const ghosts = document.querySelectorAll('.ghost');
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting) e.target.classList.add('show');
+      });
+    }, { threshold: 0.2 });
+    ghosts.forEach(el=>obs.observe(el));
+  </script>
+</body>
+</html>
