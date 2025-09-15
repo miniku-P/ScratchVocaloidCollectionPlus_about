@@ -252,6 +252,21 @@ A.<a href="https://scratch.mit.edu/users/Q4119" target="_blank" rel="noopener no
       </div>
     </section>
     <!-- アコーディオンここまで -->
+<section class="ghost">
+  <h2>質問投稿（Discord連携）</h2>
+  <form id="questionForm">
+    <label for="name">名前（任意）:</label><br>
+    <input type="text" id="name" name="name" placeholder="名無し"><br><br>
+
+    <label for="question">質問内容:</label><br>
+    <textarea id="question" name="question" rows="4" placeholder="質問を入力してください" required></textarea><br><br>
+
+    <button type="submit">投稿する</button>
+  </form>
+
+  <div id="feedback" style="margin-top:1rem; color:green;"></div>
+</section>
+    
   </main>
 
   <script>
@@ -277,6 +292,41 @@ A.<a href="https://scratch.mit.edu/users/Q4119" target="_blank" rel="noopener no
         }
       });
     });
+     const webhookUrl = "https://discord.com/api/webhooks/1416960114342232114/4l1JKKvUnT6NLquHyKMECPqkqxgN1JNqfLHUJNQJmTQTZsEgRo95OYOCQub79f3Jx-HV"; // ←ここにWebhook URLを貼る
+
+  const form = document.getElementById('questionForm');
+  const feedback = document.getElementById('feedback');
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value || "名無し";
+    const question = document.getElementById('question').value;
+
+    // Discordに送信するペイロード
+    const payload = {
+      content: `**質問投稿**\n**名前:** ${name}\n**質問:** ${question}`
+    };
+
+    try {
+      const response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if(response.ok){
+        feedback.textContent = "質問が送信されました！";
+        form.reset();
+      } else {
+        feedback.style.color = "red";
+        feedback.textContent = "送信に失敗しました。";
+      }
+    } catch(err){
+      feedback.style.color = "red";
+      feedback.textContent = "送信中にエラーが発生しました。";
+      console.error(err);
+    }
+  });
   </script>
 </body>
 </html>
