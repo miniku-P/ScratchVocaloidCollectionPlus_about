@@ -82,6 +82,7 @@
 }
 
 /* ----- トースト（画面中央にふわっと出る通知） ----- */
+/* ----- トースト（画面下から中央にふわっと出る通知） ----- */
 #toast {
   visibility: hidden;
   min-width: 260px;
@@ -93,7 +94,7 @@
   padding: 12px 18px;
   position: fixed;
   left: 50%;
-  bottom: -100px; /* 画面下の外に配置 */
+  bottom: -100px; /* 初期は画面下の外 */
   transform: translateX(-50%);
   z-index: 10001;
   opacity: 0;
@@ -103,18 +104,19 @@
   font-family: "NicoKaku", sans-serif;
   pointer-events: none;
 }
+
 #toast.show {
   visibility: visible;
   opacity: 1;
-  bottom: 50px; /* 出現位置 */
+  bottom: 50%;        /* 画面中央 */
+  transform: translate(-50%, 50%); /* 中央に配置 */
   pointer-events: auto;
 }
+
 @media (max-width: 480px) {
-  #toast { min-width: 200px; bottom: 40px; font-size: 14px; }
+  #toast { min-width: 200px; bottom: 50%; font-size: 14px; transform: translate(-50%, 50%); }
 }
-@media (max-width: 480px) {
-  #toast { left: 50%; right: auto; top: 48%; padding: 10px 14px; font-size: 14px; }
-}
+
 /* --------------------------------------------------- */
   </style>
 </head>
@@ -357,6 +359,31 @@ A.<a href="https://scratch.mit.edu/users/Q4119" target="_blank" rel="noopener no
       _toastTimer = null;
     }, duration);
   }
+  function showToast(message, color = "#4fa6c1", duration = 3000) {
+  if (_toastTimer) { clearTimeout(_toastTimer); _toastTimer = null; }
+  toast.textContent = message;
+  toast.style.background = color;
+  
+  // 出現
+  toast.classList.add('show');
+  toast.setAttribute('aria-hidden', 'false');
+
+  _toastTimer = setTimeout(() => {
+    // 消えるアニメーション（下に戻る）
+    toast.style.bottom = '-100px';
+    toast.style.opacity = '0';
+
+    // 少し待ってからクラス削除
+    setTimeout(() => {
+      toast.classList.remove('show');
+      toast.setAttribute('aria-hidden', 'true');
+      // 元の位置に戻す
+      toast.style.bottom = '';
+      toast.style.opacity = '';
+      _toastTimer = null;
+    }, 400); // CSS の transition に合わせる
+  }, duration);
+}
   /* ----------------------------------------------------------- */
 
   form.addEventListener('submit', async function(e){
