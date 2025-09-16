@@ -80,6 +80,39 @@
   background:#1b6880;
   transition:0.3s;
 }
+
+/* ----- トースト（画面中央にふわっと出る通知） ----- */
+#toast {
+  visibility: hidden;
+  min-width: 260px;
+  max-width: 90%;
+  background: #4fa6c1;
+  color: #fff;
+  text-align: center;
+  border-radius: 12px;
+  padding: 12px 18px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.92);
+  z-index: 10001;
+  opacity: 0;
+  transition: opacity 260ms cubic-bezier(.2,.9,.3,1), transform 260ms cubic-bezier(.2,.9,.3,1);
+  box-shadow: 0 10px 30px rgba(8,30,60,0.12);
+  font-weight: 700;
+  font-family: "NicoKaku", sans-serif;
+  pointer-events: none;
+}
+#toast.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+}
+@media (max-width: 480px) {
+  #toast { left: 50%; right: auto; top: 48%; padding: 10px 14px; font-size: 14px; }
+}
+/* --------------------------------------------------- */
   </style>
 </head>
 <body>
@@ -125,7 +158,7 @@
         <a href="https://scratch.mit.edu/users/hoshikage-sekai/" target="_blank">孤宵様</a>(<a href="https://scratch.mit.edu/users/hoshikage-sekai/" target="_blank">@hoshikage-sekai様</a>)<br>
         <a href="https://scratch.mit.edu/users/kuronya0119/" target="_blank">くろにゃ様</a>(<a href="https://scratch.mit.edu/users/kuronya0119/" target="_blank">@kuronya0119様</a>)<br>
         <a href="https://scratch.mit.edu/users/kaeruha/" target="_blank">蛙葉様</a>(<a href="https://scratch.mit.edu/users/Kaeruha/" target="_blank">@Kaeruha様</a>)<br>
-        <a href="https://scratch.mit.edu/users/mirami-19" target="_blank">みらみ様</a>(<a href="https://scratch.mit.edu/users/mirami-19/" target="_blank">@mirami-19</a>)
+        <a href="https://scratch.mit.edu/users/mirami-19" target="_blank">みらみ様</a>(<a href="https://scratch.mit.edu/users/mirami-19/" target="_blank">@mirami-19様</a>)
       </p>
     </section>
 
@@ -300,6 +333,29 @@ A.<a href="https://scratch.mit.edu/users/Q4119" target="_blank" rel="noopener no
   const form = document.getElementById('questionForm');
   const feedback = document.getElementById('feedback');
 
+  /* ---------- トースト関数（画面中央にふわっと表示） ---------- */
+  const toast = document.createElement('div');
+  toast.id = 'toast';
+  toast.textContent = '';
+  document.body.appendChild(toast);
+
+  let _toastTimer = null;
+  function showToast(message, color = "#4fa6c1", duration = 3000) {
+    // clear previous
+    if (_toastTimer) { clearTimeout(_toastTimer); _toastTimer = null; }
+    toast.textContent = message;
+    toast.style.background = color;
+    toast.classList.add('show');
+    toast.setAttribute('aria-hidden', 'false');
+
+    _toastTimer = setTimeout(() => {
+      toast.classList.remove('show');
+      toast.setAttribute('aria-hidden', 'true');
+      _toastTimer = null;
+    }, duration);
+  }
+  /* ----------------------------------------------------------- */
+
   form.addEventListener('submit', async function(e){
     e.preventDefault();
     const name = document.getElementById('name').value || "名無し";
@@ -314,15 +370,18 @@ A.<a href="https://scratch.mit.edu/users/Q4119" target="_blank" rel="noopener no
       if(response.ok){
         feedback.style.color = "green";
         feedback.textContent = "質問が送信されました！";
+        showToast("✅ 質問が送信されました！", "#4fa6c1", 3500);
         form.reset();
       } else {
         feedback.style.color = "red";
         feedback.textContent = "送信に失敗しました。";
+        showToast("❌ 送信に失敗しました。", "#e74c3c", 3500);
       }
     } catch(err){
-      feedback.style.color = "red";
+      feedback.style.color = "black";
       feedback.textContent = "送信中にエラーが発生しました。";
       console.error(err);
+      showToast("⚠️ 通信エラーが発生しました。", "#e67e22", 4000);
     }
   });
   </script>
