@@ -2,10 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
- <!-- ✅ ブラウザタブに表示されるタイトル -->
   <title>スクボカ-about</title>
-  
-  <!-- ✅ タブに表示されるアイコン（favicon） -->
   <link rel="icon" href="https://miniku-p.github.io/ScratchVocaloidCollectionPlus-about/scvocalogo_.png" type="image/png">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
@@ -35,7 +32,6 @@
     a { color: #1b6880; text-decoration: none; }
     a:hover { text-decoration: underline; }  
 
-    /* アコーディオン用スタイル */
     .accordion {
       background-color: #4fa6c1;
       color: #fff;
@@ -399,7 +395,7 @@ A.<a href="https://scratch.mit.edu/users/Q4119" target="_blank" rel="noopener no
 
       if(response.ok){
         feedback.style.color = "green";
-        showToast("✅ 質問が送信されました！", "# 008b8b", 3500);
+        showToast("✅ 質問が送信されました！", "#9370db", 3500);
         form.reset();
       } else {
         feedback.style.color = "red";
