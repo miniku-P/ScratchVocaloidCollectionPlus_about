@@ -399,19 +399,16 @@ A.<a href="https://scratch.mit.edu/users/Q4119" target="_blank" rel="noopener no
 
       if(response.ok){
         feedback.style.color = "green";
-        feedback.textContent = "質問が送信されました！";
-        showToast("✅ 質問が送信されました！", "#4fa6c1", 3500);
+        showToast("✅ 質問が送信されました！", "#008b8b", 3500);
         form.reset();
       } else {
         feedback.style.color = "red";
-        feedback.textContent = "送信に失敗しました。";
-        showToast("❌ 送信に失敗しました。", "#e74c3c", 3500);
+        showToast("❌ 送信に失敗しました。", "#dc143c", 3500);
       }
     } catch(err){
       feedback.style.color = "black";
-      feedback.textContent = "送信中にエラーが発生しました。";
       console.error(err);
-      showToast("⚠️ 通信エラーが発生しました。", "#e67e22", 4000);
+      showToast("⚠️ 通信エラーが発生しました。", "#778899", 4000);
     }
   });
   </script>
